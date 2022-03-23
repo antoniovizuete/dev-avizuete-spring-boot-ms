@@ -33,10 +33,13 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Product update(final long id, final Product product) {
-		if (!repository.existsById(id)) {
-			throw new EntityNotFoundException("Product not found");
-		}
-		return repository.save(product);
+		final Product productDb = this.findById(id);
+		productDb.setCategory(product.getCategory());
+		productDb.setColor(product.getColor());
+		productDb.setDescription(product.getDescription());
+		productDb.setSize(product.getSize());
+		
+		return repository.save(productDb);
 	}
 
 	@Override
